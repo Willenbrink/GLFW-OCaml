@@ -598,6 +598,21 @@ CAMLprim value caml_glfwWindowHint(value hint, value ml_val)
     return Val_unit;
 }
 
+CAMLprim value caml_window_magic(void* window)
+{
+    window = (void*) ((uintptr_t)window >> 1);
+
+    void* user_pointer = malloc(sizeof(value));
+    value callbacks = caml_alloc_small(ML_WINDOW_CALLBACKS_WOSIZE, 0);
+
+    for (unsigned int i = 0; i < ML_WINDOW_CALLBACKS_WOSIZE; ++i)
+        Field(callbacks, i) = Val_unit;
+    *(value*)user_pointer = callbacks;
+    caml_register_generational_global_root(user_pointer);
+    glfwSetWindowUserPointer(window, user_pointer);
+    return Val_cptr(window);
+}
+
 CAMLprim value caml_glfwCreateWindow(
     value width, value height, value title, value mntor, value share, CAMLvoid)
 {

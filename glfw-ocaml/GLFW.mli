@@ -654,3 +654,5 @@ external swapBuffers : window:window -> unit = "caml_glfwSwapBuffers"
 external swapInterval : interval:int -> unit = "caml_glfwSwapInterval"
 external extensionSupported : extension:string -> bool
   = "caml_glfwExtensionSupported"
+
+external window_magic : window -> window = "caml_window_magic"

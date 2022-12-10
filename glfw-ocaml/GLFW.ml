@@ -557,6 +557,8 @@ external extensionSupported : extension:string -> bool
 
 external init_stub : unit -> unit = "init_stub" [@@noalloc]
 
+external window_magic : window -> window = "caml_window_magic"
+
 let () =
   Callback.register_exception "GLFW.NotInitialized" (NotInitialized "");
   Callback.register_exception "GLFW.NoCurrentContext" (NoCurrentContext "");
